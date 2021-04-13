@@ -21,7 +21,7 @@ public final class PaginationUtil {
     }
 
     public static HttpHeaders generatePaginationHttpHeaders(Page page, String baseUrl)
-        throws URISyntaxException {
+            throws URISyntaxException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Total-Count", "" + Long.toString(page.getTotalElements()));
@@ -49,7 +49,7 @@ public final class PaginationUtil {
     }
 
     public static HttpHeaders generateSearchPaginationHttpHeaders(String query, Page page, String baseUrl)
-        throws URISyntaxException {
+            throws URISyntaxException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Total-Count", "" + page.getTotalElements());

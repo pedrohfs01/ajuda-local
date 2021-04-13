@@ -42,8 +42,8 @@ public class LojaResource {
         }
         Loja result = lojaRepository.save(loja);
         return ResponseEntity.created(new URI("/api/lojas/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 
 
@@ -55,8 +55,8 @@ public class LojaResource {
         }
         Loja result = lojaRepository.save(loja);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, loja.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, loja.getId().toString()))
+                .body(result);
     }
 
     @GetMapping("/lojas")

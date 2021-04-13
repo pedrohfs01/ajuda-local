@@ -16,9 +16,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * REST controller for managing {@link com.ajudalocal.domain.Usuario}.
- */
 @RestController
 @RequestMapping("/api")
 @Transactional
@@ -37,13 +34,6 @@ public class UsuarioResource {
         this.usuarioRepository = usuarioRepository;
     }
 
-    /**
-     * {@code POST  /usuarios} : Create a new usuario.
-     *
-     * @param usuario the usuario to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new usuario, or with status {@code 400 (Bad Request)} if the usuario has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
     @PostMapping("/usuarios")
     public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) throws URISyntaxException {
         log.debug("REST request to save Usuario : {}", usuario);
@@ -52,19 +42,10 @@ public class UsuarioResource {
         }
         Usuario result = usuarioRepository.save(usuario);
         return ResponseEntity.created(new URI("/api/usuarios/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 
-    /**
-     * {@code PUT  /usuarios} : Updates an existing usuario.
-     *
-     * @param usuario the usuario to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated usuario,
-     * or with status {@code 400 (Bad Request)} if the usuario is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the usuario couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
     @PutMapping("/usuarios")
     public ResponseEntity<Usuario> updateUsuario(@RequestBody Usuario usuario) throws URISyntaxException {
         log.debug("REST request to update Usuario : {}", usuario);
@@ -73,27 +54,18 @@ public class UsuarioResource {
         }
         Usuario result = usuarioRepository.save(usuario);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, usuario.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, usuario.getId().toString()))
+                .body(result);
     }
 
-    /**
-     * {@code GET  /usuarios} : get all the usuarios.
-     *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of usuarios in body.
-     */
     @GetMapping("/usuarios")
     public List<Usuario> getAllUsuarios() {
         log.debug("REST request to get all Usuarios");
         return usuarioRepository.findAll();
     }
 
-    /**
-     * {@code GET  /usuarios/:id} : get the "id" usuario.
-     *
-     * @param id the id of the usuario to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the usuario, or with status {@code 404 (Not Found)}.
-     */
+
+
     @GetMapping("/usuarios/{id}")
     public ResponseEntity<Usuario> getUsuario(@PathVariable Long id) {
         log.debug("REST request to get Usuario : {}", id);
@@ -101,12 +73,7 @@ public class UsuarioResource {
         return new ResponseEntity(usuario.get(), HttpStatus.OK);
     }
 
-    /**
-     * {@code DELETE  /usuarios/:id} : delete the "id" usuario.
-     *
-     * @param id the id of the usuario to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
+
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<Void> deleteUsuario(@PathVariable Long id) {
         log.debug("REST request to delete Usuario : {}", id);

@@ -7,9 +7,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * A Usuario.
- */
+
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {
@@ -172,13 +170,13 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "Usuario{" +
-            "id=" + getId() +
-            ", nome='" + getNome() + "'" +
-            ", senha='" + getSenha() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", estado='" + getEstado() + "'" +
-            ", cidade='" + getCidade() + "'" +
-            ", uf='" + getUf() + "'" +
-            "}";
+                "id=" + getId() +
+                ", nome='" + getNome() + "'" +
+                ", senha='" + getSenha() + "'" +
+                ", email='" + getEmail() + "'" +
+                ", estado='" + getEstado() + "'" +
+                ", cidade='" + getCidade() + "'" +
+                ", uf='" + getUf() + "'" +
+                "}";
     }
 }

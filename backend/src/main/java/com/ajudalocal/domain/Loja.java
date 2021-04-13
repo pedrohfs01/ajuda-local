@@ -6,9 +6,6 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 
-/**
- * A Loja.
- */
 @Entity
 @Table(name = "loja")
 public class Loja implements Serializable {
@@ -192,15 +189,15 @@ public class Loja implements Serializable {
     @Override
     public String toString() {
         return "Loja{" +
-            "id=" + getId() +
-            ", cnpj=" + getCnpj() +
-            ", nome='" + getNome() + "'" +
-            ", telefone='" + getTelefone() + "'" +
-            ", descricao='" + getDescricao() + "'" +
-            ", estado='" + getEstado() + "'" +
-            ", cidade='" + getCidade() + "'" +
-            ", uf='" + getUf() + "'" +
-            ", categoria='" + getCategoria() + "'" +
-            "}";
+                "id=" + getId() +
+                ", cnpj=" + getCnpj() +
+                ", nome='" + getNome() + "'" +
+                ", telefone='" + getTelefone() + "'" +
+                ", descricao='" + getDescricao() + "'" +
+                ", estado='" + getEstado() + "'" +
+                ", cidade='" + getCidade() + "'" +
+                ", uf='" + getUf() + "'" +
+                ", categoria='" + getCategoria() + "'" +
+                "}";
     }
 }
