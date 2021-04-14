@@ -25,9 +25,6 @@ public class LojaResource {
 
     private static final String ENTITY_NAME = "loja";
 
-    @Value("${spring.application.name}")
-    private String applicationName;
-
     private final LojaRepository lojaRepository;
 
     public LojaResource(LojaRepository lojaRepository) {

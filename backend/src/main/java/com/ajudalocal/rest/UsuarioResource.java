@@ -25,9 +25,6 @@ public class UsuarioResource {
 
     private static final String ENTITY_NAME = "usuario";
 
-    @Value("${spring.application.name}")
-    private String applicationName;
-
     private final UsuarioRepository usuarioRepository;
 
     public UsuarioResource(UsuarioRepository usuarioRepository) {
