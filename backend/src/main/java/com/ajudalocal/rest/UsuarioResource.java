@@ -3,9 +3,10 @@ package com.ajudalocal.rest;
 import com.ajudalocal.domain.Usuario;
 import com.ajudalocal.repository.UsuarioRepository;
 import com.ajudalocal.rest.util.HeaderUtil;
+import com.ajudalocal.service.UsuarioService;
+import com.ajudalocal.service.dto.UsuarioDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +28,11 @@ public class UsuarioResource {
 
     private final UsuarioRepository usuarioRepository;
 
-    public UsuarioResource(UsuarioRepository usuarioRepository) {
+    private final UsuarioService usuarioService;
+
+    public UsuarioResource(UsuarioRepository usuarioRepository, UsuarioService usuarioService) {
         this.usuarioRepository = usuarioRepository;
+        this.usuarioService = usuarioService;
     }
 
     @PostMapping("/usuarios")
@@ -77,4 +81,15 @@ public class UsuarioResource {
         usuarioRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @PostMapping("/usuarios/login")
+    public ResponseEntity<Usuario> login(@RequestBody UsuarioDTO usuarioDTO){
+        boolean verificar = usuarioService.login(usuarioDTO);
+        if(verificar){
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

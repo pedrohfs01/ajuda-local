@@ -17,7 +17,7 @@ public class Loja implements Serializable {
     private Long id;
 
     @Column(name = "cnpj")
-    private Long cnpj;
+    private String cnpj;
 
     @Column(name = "nome")
     private String nome;
@@ -50,19 +50,6 @@ public class Loja implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getCnpj() {
-        return cnpj;
-    }
-
-    public Loja cnpj(Long cnpj) {
-        this.cnpj = cnpj;
-        return this;
-    }
-
-    public void setCnpj(Long cnpj) {
-        this.cnpj = cnpj;
     }
 
     public String getNome() {
@@ -167,6 +154,14 @@ public class Loja implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     @Override
