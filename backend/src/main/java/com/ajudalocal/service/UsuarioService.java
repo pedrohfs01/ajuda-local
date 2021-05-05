@@ -16,12 +16,8 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
 
-    public boolean login(UsuarioDTO usuarioDTO){
+    public Optional<Usuario> login(UsuarioDTO usuarioDTO){
         Optional<Usuario> usuario = usuarioRepository.procurarUsuario(usuarioDTO.getEmail(), usuarioDTO.getSenha());
-        if(usuario.isPresent()){
-            return true;
-        }else{
-            return false;
-        }
+        return usuario;
     }
 }

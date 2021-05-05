@@ -1,0 +1,78 @@
+<p-toast></p-toast>
+<div class="container">
+  <div class="row justify-content-center align-items-center" style="height:100vh">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <form #registrarForm="ngForm" name="registrarForm" (ngSubmit)="registrar(registrarForm)">
+            <p-card header="Registrar conta">
+              <div class="p-field">
+                  <input required name="nome" id="float-input" [(ngModel)]="usuario.nome" type="text" placeholder="Nome"
+                    pInputText>
+
+                  <div *ngIf="(registrarForm.controls['nome']
+                    && !registrarForm.controls['nome'].valid
+                    && (registrarForm.controls['nome'].touched
+                    || registrarForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+              </div>
+              <div class="p-field">
+
+                <input required name="email" id="float-input" type="text" [(ngModel)]="usuario.email"
+                  placeholder="Email" pInputText>
+
+                  <div *ngIf="(registrarForm.controls['email']
+                    && !registrarForm.controls['email'].valid
+                    && (registrarForm.controls['email'].touched
+                    || registrarForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+              </div>
+              <div class="p-field">
+                <p-dropdown required name="uf" [options]="estados" [(ngModel)]="usuario.uf"
+                  (onChange)="selectEstado($event)" optionLabel="sigla" optionValue="sigla"></p-dropdown>
+
+                  <div *ngIf="(registrarForm.controls['uf']
+                    && !registrarForm.controls['uf'].valid
+                    && (registrarForm.controls['uf'].touched
+                    || registrarForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+              </div>
+              <div class="p-field">
+                <input required id="float-input" name="estado" disabled="true" type="text" [(ngModel)]="usuario.estado"
+                  placeholder="Estado" pInputText>
+
+              </div>
+              <div class="p-field">
+                <p-dropdown required name="cidade" [options]="cidades" [(ngModel)]="usuario.cidade"></p-dropdown>
+
+                <div *ngIf="(registrarForm.controls['cidade']
+                    && !registrarForm.controls['cidade'].valid
+                    && (registrarForm.controls['cidade'].touched
+                    || registrarForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+              </div>
+              <div class="p-field">
+                <input required name="senha" id="float-input" type="password" [(ngModel)]="usuario.senha"
+                  placeholder="Senha" pInputText>
+
+                  <div *ngIf="(registrarForm.controls['senha']
+                    && !registrarForm.controls['senha'].valid
+                    && (registrarForm.controls['senha'].touched
+                    || registrarForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+              </div>
+              <ng-template pTemplate="footer">
+                <button pButton pRipple type="submit" label="Registrar" class="p-button-secondary"></button>
+              </ng-template>
+            </p-card>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<p-toast></p-toast>
+<div class="container">
+  <div class="row justify-content-center align-items-center" style="height:90vh">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <form #loginForm="ngForm" name="loginForm" (ngSubmit)="login(loginForm)">
+            <p-card header="Entrar na conta" >
+              <div class="p-field">
+                <input required name="email" id="float-input" type="text" [(ngModel)]="usuarioLogin.email" placeholder="Email" pInputText>
+
+                <div *ngIf="(loginForm.controls['email']
+                    && !loginForm.controls['email'].valid
+                    && (loginForm.controls['email'].touched
+                    || loginForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+              </div>
+              <div class="p-field">
+                <input required name="senha" id="float-input" type="password" [(ngModel)]="usuarioLogin.senha" placeholder="Senha" pInputText>
+
+                <div *ngIf="(loginForm.controls['senha']
+                && !loginForm.controls['senha'].valid
+                && (loginForm.controls['senha'].touched
+                || loginForm.submitted))" class="p-message p-messages-error">
+                <p-message severity="error" text="Campo obrigatório"></p-message>
+              </div>
+              </div>
+              <ng-template pTemplate="footer">
+              <button pButton pRipple type="submit" label="Entrar" class="p-button-primary"></button>
+
+              <button [routerLink]="'/registrar'" pButton pRipple type="button" label="Registrar" class="p-button-secondary"></button>
+            </ng-template>
+            </p-card>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

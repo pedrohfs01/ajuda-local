@@ -19,6 +19,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 @Transactional
+@CrossOrigin("*")
 public class LojaResource {
 
     private final Logger log = LoggerFactory.getLogger(LojaResource.class);

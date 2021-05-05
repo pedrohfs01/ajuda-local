@@ -20,6 +20,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 @Transactional
+@CrossOrigin("*")
 public class UsuarioResource {
 
     private final Logger log = LoggerFactory.getLogger(UsuarioResource.class);
@@ -84,9 +85,9 @@ public class UsuarioResource {
 
     @PostMapping("/usuarios/login")
     public ResponseEntity<Usuario> login(@RequestBody UsuarioDTO usuarioDTO){
-        boolean verificar = usuarioService.login(usuarioDTO);
-        if(verificar){
-            return ResponseEntity.ok().build();
+        Optional<Usuario> usuario = usuarioService.login(usuarioDTO);
+        if(usuario.isPresent()){
+            return new ResponseEntity<>(usuario.get(), HttpStatus.OK);
         }else{
             return ResponseEntity.notFound().build();
         }
