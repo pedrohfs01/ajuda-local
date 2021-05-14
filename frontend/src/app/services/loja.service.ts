@@ -14,7 +14,7 @@ export class LojaService {
   resourceUrl: string = environment.resourceUrl + "lojas";
 
   constructor(private http: HttpClient,
-              private toastService: ToastrService) { }
+    private toastService: ToastrService) { }
 
 
   create(loja: Loja, foto: File): Observable<Loja> {
@@ -31,10 +31,10 @@ export class LojaService {
     body.append('loja', blob);
 
     return this.http.post<Loja>(this.resourceUrl, body).pipe(catchError((error: any) => {
-      if(error.error.message === "cnpjexiste"){
+      if (error.error.message === "cnpjexiste") {
         this.toastService.error("CNPJ já existe!", "Erro")
         return throwError(error.status);
-      }else if(error.error.message === "cnpjinvalido"){
+      } else if (error.error.message === "cnpjinvalido") {
         this.toastService.error("CNPJ Inválido", "Erro")
         return throwError(error.status);
       }
@@ -44,7 +44,7 @@ export class LojaService {
   update(loja: Loja, foto?: File): Observable<Loja> {
     let body = new FormData();
 
-    if(foto != null){
+    if (foto != null) {
       body.append('foto', foto);
     }
 
@@ -67,24 +67,37 @@ export class LojaService {
     return this.http.get<Loja[]>(this.resourceUrl);
   }
 
-  getAllByEstado(estado: string) : Observable<Loja[]>{
-    return this.http.get<Loja[]>(this.resourceUrl+"/estado?nome="+estado);
+  getAllByEstado(estado: string): Observable<Loja[]> {
+    return this.http.get<Loja[]>(this.resourceUrl + "/estado?nome=" + estado);
   }
 
-  getAllByCidade(cidade: string) : Observable<Loja[]>{
-    return this.http.get<Loja[]>(this.resourceUrl+"/cidade?nome="+cidade);
+  getAllByCidade(cidade: string): Observable<Loja[]> {
+    return this.http.get<Loja[]>(this.resourceUrl + "/cidade?nome=" + cidade);
   }
 
-  getAllByUsuario(id: number): Observable<Loja[]>{
-    return this.http.get<Loja[]>(this.resourceUrl+"/usuario/"+id);
+  getAllByUsuario(id: number): Observable<Loja[]> {
+    return this.http.get<Loja[]>(this.resourceUrl + "/usuario/" + id);
+  }
+
+  getAllByCategoria(categoria: string, estado: string, cidade: string) : Observable<Loja[]> {
+    let url = this.resourceUrl + "/categoria?";
+    url += "categoria=" + categoria;
+
+    if (cidade === null && estado !== null) {
+      url += "&estado=" + estado;
+    }
+    if (cidade !== null) {
+      url += "&cidade=" + cidade;
+    }
+    return this.http.get<Loja[]>(url);
   }
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(this.resourceUrl + "/" + id);
   }
 
-  rating(idLoja: number, idUsuario: number, valorRating: number): Observable<Loja>{
-    return this.http.get<Loja>(this.resourceUrl+"/"+idLoja+"/"+idUsuario+"/"+valorRating);
+  rating(idLoja: number, idUsuario: number, valorRating: number): Observable<Loja> {
+    return this.http.get<Loja>(this.resourceUrl + "/" + idLoja + "/" + idUsuario + "/" + valorRating);
   }
 
 }

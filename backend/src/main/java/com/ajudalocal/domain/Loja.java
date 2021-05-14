@@ -49,7 +49,7 @@ public class Loja implements Serializable {
     @Lob
     private byte[] foto;
 
-    @OneToMany(mappedBy = "loja")
+    @OneToMany(mappedBy = "loja", cascade = CascadeType.ALL)
     private Set<LojaRating> ratings;
 
     public Long getId() {

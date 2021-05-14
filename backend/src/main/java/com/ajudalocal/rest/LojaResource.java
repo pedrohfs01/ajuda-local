@@ -130,6 +130,19 @@ public class LojaResource {
         return lojas;
     }
 
+    @GetMapping("/lojas/categoria")
+    public List<Loja> getAllByCategoria(@RequestParam(name = "categoria") String categoria,
+                                        @RequestParam(name = "estado", required = false) String estado,
+                                        @RequestParam(name = "cidade", required = false) String cidade){
+        if(estado == null && cidade == null){
+            return lojaRepository.findAllByCategoria(categoria);
+        }else if(cidade == null){
+            return lojaRepository.findAllByCategoriaAndEstado(categoria, estado);
+        }else{
+            return lojaRepository.findAllByCategoriaAndCidade(categoria, cidade);
+        }
+    }
+
 
     @GetMapping("/lojas/{id}/{idUsuario}/{quantidade}")
     public ResponseEntity<Loja> adicionarRating(@PathVariable("id") Long id, @PathVariable("idUsuario") Long idUsuario,@PathVariable("quantidade") Long quantidade){

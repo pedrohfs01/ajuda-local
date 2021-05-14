@@ -27,6 +27,9 @@ export class LojasComponent implements OnInit {
 
   estadoSearch: Estado = new Estado(null, null, null);
   cidadeSearch: string = null;
+  categoriaSearch: string = null;
+
+  categorias: string[] = [];
 
   mostrarDialogVisualizar: boolean = false;
 
@@ -49,6 +52,11 @@ export class LojasComponent implements OnInit {
       })
     })
 
+    this.categorias = [
+      "Geral",
+      "Restaurante",
+      "Comércio local"
+    ]
   }
 
   carregarLojas() {
@@ -84,25 +92,40 @@ export class LojasComponent implements OnInit {
   }
 
   pesquisar() {
-    if (this.cidadeSearch === null && this.estadoSearch.nome === null) {
-      return this.toastService.error("Selecione ao menos um estado ou cidade.")
+    if (this.cidadeSearch === null && this.estadoSearch.nome === null && this.categoriaSearch === null) {
+      return this.toastService.error("Selecione ao menos um estado, cidade ou categoria para pesquisar.")
     }
-    if (this.cidadeSearch === null) {
-      this.lojaService.getAllByEstado(this.estadoSearch.nome).subscribe(response => {
-        this.lojas = response;
-        this.limpaCampos();
-      })
-    } else {
-      this.lojaService.getAllByCidade(this.cidadeSearch).subscribe(response => {
-        this.lojas = response;
-        this.limpaCampos();
-      })
+    if (this.categoriaSearch === null) {
+      if (this.cidadeSearch === null) {
+        this.lojaService.getAllByEstado(this.estadoSearch.nome).subscribe(response => {
+          this.lojas = response;
+          this.limpaCampos();
+        })
+      } else {
+        this.lojaService.getAllByCidade(this.cidadeSearch).subscribe(response => {
+          this.lojas = response;
+          this.limpaCampos();
+        })
+      }
+    }else{
+      if (this.cidadeSearch === null) {
+        this.lojaService.getAllByCategoria(this.categoriaSearch, this.estadoSearch.nome, null).subscribe(response => {
+          this.lojas = response;
+          this.limpaCampos();
+        })
+      } else {
+        this.lojaService.getAllByCategoria(this.categoriaSearch, this.estadoSearch.nome, this.cidadeSearch).subscribe(response => {
+          this.lojas = response;
+          this.limpaCampos();
+        })
+      }
     }
   }
 
   limpaCampos() {
     this.estadoSearch = new Estado(null, null, null);
     this.cidadeSearch = null;
+    this.categoriaSearch = null;
     this.cidades = [];
   }
 

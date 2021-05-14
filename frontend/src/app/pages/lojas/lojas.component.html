@@ -8,6 +8,9 @@
       <p-dropdown styleClass="p-mb-2 p-mb-md-0 p-mr-2" [placeholder]="'Cidade'" name="cidade" [options]="cidades"
         [(ngModel)]="cidadeSearch">
       </p-dropdown>
+      <p-dropdown styleClass="p-mb-2 p-mb-md-0 p-mr-2" [placeholder]="'Categoria'" name="categoria" [options]="categorias"
+        [(ngModel)]="categoriaSearch">
+      </p-dropdown>
       <button pButton pRipple (click)="limpar()" type="button" label="Limpar"
         class="p-button-secondary p-mr-2"></button>
       <button pButton pRipple (click)="pesquisar()" type="button" label="Pesquisar"

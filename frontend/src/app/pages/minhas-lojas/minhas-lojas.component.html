@@ -1,3 +1,22 @@
+<p-toast position="bottom-center" key="c" (onClose)="cancelarDelecao()" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+      <div class="p-flex p-flex-column" style="flex: 1">
+          <div class="p-text-center">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+              <h4>{{message.summary}}</h4>
+              <p>{{message.detail}}</p>
+          </div>
+          <div class="p-grid p-fluid">
+              <div class="p-col-6">
+                  <button type="button" pButton (click)="confirmarDelecao()" label="Sim" class="p-button-success"></button>
+              </div>
+              <div class="p-col-6">
+                  <button type="button" pButton (click)="cancelarDelecao()" label="Não" class="p-button-secondary"></button>
+              </div>
+          </div>
+      </div>
+  </ng-template>
+</p-toast>
 <p-dataView [value]="lojas" layout="grid" [emptyMessage]="'Você não tem lojas cadastradas!'" [paginator]="true"
   [rows]="6" filterBy="nome" #dv>
   <ng-template pTemplate="header">
@@ -32,6 +51,7 @@
         </div>
         <div class="product-grid-item-bottom">
           <p-button (click)="abrirModalEditar(loja.id)" icon="pi pi-pencil"></p-button>
+          <button pButton type="button" (click)="deletarLoja(loja.id)" icon="pi pi-trash" class="p-button-danger"></button>
         </div>
       </div>
     </div>
