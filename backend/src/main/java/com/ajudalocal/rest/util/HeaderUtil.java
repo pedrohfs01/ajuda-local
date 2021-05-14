@@ -47,8 +47,8 @@ public final class HeaderUtil {
     public static HttpHeaders createFailureAlert(String entityName, String errorKey, String defaultMessage) {
         log.error("Entity creation failed, {}", defaultMessage);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-ajudalocal-error", "error." + errorKey);
-        headers.add("X-ajudalocal-params", entityName);
+        headers.add("X-ajudaLocal-error", "error." + errorKey);
+        headers.add("X-ajudaLocal-params", entityName);
         return headers;
     }
 }

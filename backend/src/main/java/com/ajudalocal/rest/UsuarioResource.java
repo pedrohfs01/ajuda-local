@@ -2,6 +2,7 @@ package com.ajudalocal.rest;
 
 import com.ajudalocal.domain.Usuario;
 import com.ajudalocal.repository.UsuarioRepository;
+import com.ajudalocal.rest.util.CustomParameterizedException;
 import com.ajudalocal.rest.util.HeaderUtil;
 import com.ajudalocal.service.UsuarioService;
 import com.ajudalocal.service.dto.UsuarioDTO;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +43,10 @@ public class UsuarioResource {
         log.debug("REST request to save Usuario : {}", usuario);
         if (usuario.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new usuario cannot already have an ID")).body(null);
+        }else if(usuarioRepository.findByEmail(usuario.getEmail()).isPresent()){
+            throw new CustomParameterizedException("emailexiste");
         }
+
         Usuario result = usuarioRepository.save(usuario);
         return ResponseEntity.created(new URI("/api/usuarios/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

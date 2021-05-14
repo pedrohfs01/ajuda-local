@@ -1,6 +1,8 @@
 package com.ajudalocal.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 import java.io.Serializable;
@@ -36,8 +38,14 @@ public class Usuario implements Serializable {
     @Column(name = "uf")
     private String uf;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Set<Loja> lojas = new HashSet<>();
+
+    @OneToMany(mappedBy = "usuario")
+    @JsonIgnore
+    private Set<LojaRating> ratings;
+
+    private Boolean isEmpresario;
 
     public Long getId() {
         return id;
@@ -148,6 +156,22 @@ public class Usuario implements Serializable {
 
     public void setLojas(Set<Loja> lojas) {
         this.lojas = lojas;
+    }
+
+    public Set<LojaRating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<LojaRating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public Boolean getEmpresario() {
+        return isEmpresario;
+    }
+
+    public void setEmpresario(Boolean empresario) {
+        isEmpresario = empresario;
     }
 
     @Override

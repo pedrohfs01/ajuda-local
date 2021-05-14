@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "loja")
@@ -41,8 +42,15 @@ public class Loja implements Serializable {
     private String categoria;
 
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     @JsonIgnoreProperties(value = "lojas", allowSetters = true)
     private Usuario usuario;
+
+    @Lob
+    private byte[] foto;
+
+    @OneToMany(mappedBy = "loja")
+    private Set<LojaRating> ratings;
 
     public Long getId() {
         return id;
@@ -162,6 +170,22 @@ public class Loja implements Serializable {
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public Set<LojaRating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<LojaRating> ratings) {
+        this.ratings = ratings;
     }
 
     @Override
