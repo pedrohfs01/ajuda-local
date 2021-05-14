@@ -22,10 +22,27 @@ import { RegistrarComponent } from './pages/registrar/registrar.component';
 import { LojaService } from './services/loja.service';
 import { UsuarioService } from './services/usuario.service';
 import { UtilitarioService } from './services/utilitario.service';
-
-
-
-
+import { LojasComponent } from './pages/lojas/lojas.component';
+import { MenuComponent } from './componentes/menu/menu.component';
+import {MenuModule} from 'primeng/menu';
+import {TabMenuModule} from 'primeng/tabmenu';
+import { StorageService } from './services/storage.service';
+import { CriarLojaComponent } from './pages/criar-loja/criar-loja.component';
+import { PanelModule } from 'primeng/panel';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import {InputMaskModule} from 'primeng/inputmask';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {CarouselModule} from 'primeng/carousel';
+import {FileUploadModule} from 'primeng/fileupload';
+import {DataViewModule} from 'primeng/dataview';
+import {RatingModule} from 'primeng/rating';
+import {ToggleButtonModule} from 'primeng/togglebutton'
+import { ToastrModule } from 'ngx-toastr';
+import { MinhasLojasComponent } from './pages/minhas-lojas/minhas-lojas.component';
+import { DialogModule } from "primeng/dialog";
 
 
 
@@ -35,6 +52,10 @@ import { UtilitarioService } from './services/utilitario.service';
     AppComponent,
     LoginComponent,
     RegistrarComponent,
+    LojasComponent,
+    MenuComponent,
+    CriarLojaComponent,
+    MinhasLojasComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,8 +75,24 @@ import { UtilitarioService } from './services/utilitario.service';
     MessageModule,
     MessagesModule,
     ToastModule,
+    MenuModule,
+    TabMenuModule,
+    PanelModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    InputMaskModule,
+    InputTextModule,
+    InputTextareaModule,
+    CarouselModule,
+    FileUploadModule,
+    DataViewModule,
+    RatingModule,
+    DialogModule,
+    ToggleButtonModule,
+    ToastrModule.forRoot(),
   ],
-  providers: [LojaService, UsuarioService, UtilitarioService, MessageService],
+  providers: [LojaService, UsuarioService, UtilitarioService, MessageService, StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

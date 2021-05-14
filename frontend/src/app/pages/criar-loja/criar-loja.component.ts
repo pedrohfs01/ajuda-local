@@ -3,45 +3,59 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MessageService } from 'primeng/api';
 import { Estado } from 'src/app/modelos/estado.model';
+import { Loja } from 'src/app/modelos/loja.model';
 import { Usuario } from 'src/app/modelos/usuario.model';
-import { UsuarioService } from 'src/app/services/usuario.service';
+import { LojaService } from 'src/app/services/loja.service';
+import { StorageService } from 'src/app/services/storage.service';
 import { UtilitarioService } from 'src/app/services/utilitario.service';
 
 @Component({
-  selector: 'app-registrar',
-  templateUrl: './registrar.component.html',
-  styleUrls: ['./registrar.component.css']
+  selector: 'app-criar-loja',
+  templateUrl: './criar-loja.component.html',
+  styleUrls: ['./criar-loja.component.css']
 })
-export class RegistrarComponent implements OnInit {
+export class CriarLojaComponent implements OnInit {
+
 
   estados: Estado[] = [];
   cidades: string[] = [];
 
+  loja: Loja = new Loja();
   usuario: Usuario = new Usuario();
+
+  categorias: string[];
 
 
   constructor(private utilitarioService: UtilitarioService,
-              private usuarioService: UsuarioService,
+              private lojaService: LojaService,
               private toastService: ToastrService,
+              private storageService: StorageService,
               private router: Router) { }
 
 
   ngOnInit(): void {
-
     this.utilitarioService.listarEstados().subscribe(response => {
       response.forEach(item => {
         this.estados.push(new Estado(item.id, item.nome, item.sigla));
       })
     })
+
+    this.usuario = this.storageService.getLocalUser();
+
+    this.categorias = [
+      "Geral",
+      "Restaurante",
+      "Comércio local"
+    ]
   }
 
   selectEstado(event){
     this.cidades = [];
-    this.usuario.uf = event.value;
-    if(this.usuario.uf){
+    this.loja.uf = event.value;
+    if(this.loja.uf){
       this.estados.forEach(item => {
-        if(item.sigla === this.usuario.uf){
-          this.usuario.estado = item.nome;
+        if(item.sigla === this.loja.uf){
+          this.loja.estado = item.nome;
           this.utilitarioService.listarCidadePorUf(item.id).subscribe(response => {
             response.forEach(item => {
               this.cidades.push(item.nome);
@@ -54,23 +68,19 @@ export class RegistrarComponent implements OnInit {
 
   registrar(form){
     if(form.valid){
-      if(this.usuario.senha.length <= 4){
-        return this.toastService.error("Digite mais de 4 caracteres na senha!")
+      this.loja.usuario = this.usuario;
+      if(!this.loja.foto){
+        return this.toastService.error("Adicione uma foto.", "Erro");
       }
-      this.usuarioService.create(this.usuario).subscribe(response => {
-        this.toastService.success("Registrado com sucesso!", "Sucesso");
-        this.telaLogin();
-      });
+      this.lojaService.create(this.loja, this.loja.foto).subscribe(response => {
+        this.toastService.success("Loja criada com sucesso!", "Sucesso")
+        this.router.navigate(["lojas"]);
+      })
     }
   }
 
-  isEmpresario(event){
-    this.usuario.empresario = event.checked;
-  }
-
-
-  telaLogin(){
-    this.router.navigate(["login"]);
+  selecionarFoto(event){
+    this.loja.foto = event.currentFiles[0];
   }
 
 }

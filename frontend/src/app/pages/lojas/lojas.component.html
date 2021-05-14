@@ -1,0 +1,74 @@
+<p-dataView [value]="lojas" layout="grid" [emptyMessage]="'Não foi encontrado nenhum registro!'" [paginator]="true"
+  [rows]="6" filterBy="nome" #dv>
+  <ng-template pTemplate="header">
+    <div class="p-d-flex p-flex-column p-flex-md-row">
+      <p-dropdown styleClass="p-mb-2 p-mb-md-0 p-mr-2 p-ml-4" [placeholder]="'UF'" name="uf" [options]="estados"
+        [(ngModel)]="estadoSearch.sigla" (onChange)="selectEstado($event)" optionLabel="sigla" optionValue="sigla">
+      </p-dropdown>
+      <p-dropdown styleClass="p-mb-2 p-mb-md-0 p-mr-2" [placeholder]="'Cidade'" name="cidade" [options]="cidades"
+        [(ngModel)]="cidadeSearch">
+      </p-dropdown>
+      <button pButton pRipple (click)="limpar()" type="button" label="Limpar"
+        class="p-button-secondary p-mr-2"></button>
+      <button pButton pRipple (click)="pesquisar()" type="button" label="Pesquisar"
+        class="p-button-secondary p-mr-6"></button>
+
+      <span class="p-input-icon-left p-mb-10 p-mb-md-2">
+        <i class="pi pi-search"></i>
+        <input type="search" pInputText placeholder="Procure pelo nome" (input)="dv.filter($event.target.value)" #input>
+      </span>
+    </div>
+  </ng-template>
+
+  <ng-template let-loja pTemplate="gridItem">
+    <div class="p-col-12 p-md-4">
+      <div class="product-grid-item card">
+        <div class="product-grid-item-top">
+          <div class="p-col-12">
+            <i class="pi pi-tag product-category-icon"></i>
+            <span class="product-category">Categoria: {{loja.categoria}}</span>
+          </div>
+        </div>
+        <div class="product-grid-item-content">
+          <img src="data:image/png;base64,{{loja.foto}}" style="width:200px; height:200px;" alt="">
+          <div class="p-col-12">
+            <span class="product-category">{{loja.cidade}}-{{loja.uf}}</span>
+          </div>
+          <div class="p-col-12">
+            <div class="product-name">{{loja.nome}}</div>
+            <div class="product-description">Descrição: {{loja.descricao}}</div>
+          </div>
+          <p-rating [ngModel]="loja.ratingTotal" [readonly]="true" [cancel]="false"></p-rating> ({{loja?.ratings?.length}})
+        </div>
+        <div class="product-grid-item-bottom">
+          <p-button (click)="abrirModalVisualizar(loja.id)" icon="pi pi-info-circle"></p-button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dataView>
+
+
+<p-dialog [closable]="false" [visible]="mostrarDialogVisualizar" [header]="'Visualizar Loja'" [style]="{width: '30vw'}"
+  [contentStyle]="{'height': ['windowHeightDialog']}">
+  <div *ngIf="lojaVisualizar.id">
+    <div class="product-grid-item-content">
+      <img src="data:image/png;base64,{{lojaVisualizar?.foto}}" style="width:200px; height:200px;" alt="">
+      <div class="p-col-12">
+        <span class="product-category">{{lojaVisualizar?.cidade}}-{{lojaVisualizar?.uf}}</span>
+      </div>
+      <div class="p-col-12">
+        <div class="product-name">{{lojaVisualizar?.nome}}</div>
+        <div class="product-description">Descrição: {{lojaVisualizar?.descricao}}</div>
+        <div class="product-description">Criado por: {{lojaVisualizar?.usuario?.nome}}</div>
+        <div class="product-description">Telefone: {{lojaVisualizar?.telefone}}</div>
+        <div class="product-description">CNPJ: {{lojaVisualizar?.cnpj}}</div>
+      </div>
+      <p-rating (onRate)="doRating($event.value)" [ngModel]="lojaVisualizar?.ratingTotal" [cancel]="false"></p-rating>
+    </div>
+  </div>
+
+  <button pButton pRipple (click)="fecharModalVisualizar()" type="button" label="Fechar"
+    class="p-button-secondary p-mr-2"></button>
+
+</p-dialog>

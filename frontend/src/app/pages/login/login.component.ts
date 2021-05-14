@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { UsuarioLogin } from 'src/app/modelos/usuario-login.model';
+import { StorageService } from 'src/app/services/storage.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -14,7 +16,7 @@ export class LoginComponent implements OnInit {
 
 
   constructor(private usuarioService: UsuarioService,
-    private messageService: MessageService) { }
+    ) { }
 
   ngOnInit(): void {
   }
@@ -22,13 +24,7 @@ export class LoginComponent implements OnInit {
 
   login(form) {
     if (form.valid) {
-      this.usuarioService.login(this.usuarioLogin).subscribe(response => {
-        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Usuário logado com sucesso!' });
-      }, err => {
-        if (err) {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Usuário/Senha incorretos' });
-        }
-      })
+      this.usuarioService.login(this.usuarioLogin);
     }
   }
 }

@@ -1,4 +1,5 @@
 import { Loja } from "./loja.model";
+import { Rating } from "./rating.model";
 
 export class Usuario{
 
@@ -10,4 +11,6 @@ export class Usuario{
   cidade?: string;
   uf?: string;
   lojas?: Loja[];
+  ratings: Rating[];
+  empresario: boolean = false;
 }

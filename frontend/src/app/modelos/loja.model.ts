@@ -1,3 +1,4 @@
+import { Rating } from "./rating.model";
 import { Usuario } from "./usuario.model";
 
 export class Loja {
@@ -11,4 +12,7 @@ export class Loja {
   uf?: string;
   categoria?: string;
   usuario?: Usuario;
+  foto?: any = null;
+  ratings: Rating[];
+  ratingTotal: number;
 }

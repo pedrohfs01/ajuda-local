@@ -1,0 +1,159 @@
+<p-dataView [value]="lojas" layout="grid" [emptyMessage]="'Você não tem lojas cadastradas!'" [paginator]="true"
+  [rows]="6" filterBy="nome" #dv>
+  <ng-template pTemplate="header">
+    <div class="p-d-flex p-flex-column p-flex-md-row">
+      <span class="p-input-icon-left p-mb-10 p-mb-md-2 p-ml-4">
+        <i class="pi pi-search"></i>
+        <input type="search" pInputText placeholder="Procure pelo nome" (input)="dv.filter($event.target.value)" #input>
+      </span>
+    </div>
+  </ng-template>
+
+  <ng-template let-loja pTemplate="gridItem">
+    <div class="p-col-12 p-md-4">
+      <div class="product-grid-item card">
+        <div class="product-grid-item-top">
+          <div class="p-col-12">
+            <i class="pi pi-tag product-category-icon"></i>
+            <span class="product-category">Categoria: {{loja.categoria}}</span>
+          </div>
+        </div>
+        <div class="product-grid-item-content">
+          <img src="data:image/png;base64,{{loja.foto}}" style="width:200px; height:200px;" alt="">
+          <div class="p-col-12">
+            <span class="product-category">{{loja.cidade}}-{{loja.uf}}</span>
+          </div>
+          <div class="p-col-12">
+            <div class="product-name">{{loja.nome}}</div>
+            <div class="product-description">Descrição: {{loja.descricao}}</div>
+          </div>
+          <p-rating [ngModel]="loja.ratingTotal" [readonly]="true" [cancel]="false"></p-rating>
+          ({{loja?.ratings?.length}})
+        </div>
+        <div class="product-grid-item-bottom">
+          <p-button (click)="abrirModalEditar(loja.id)" icon="pi pi-pencil"></p-button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dataView>
+
+<p-dialog [closable]="false" [visible]="mostrarDialogEditar" [header]="'Editar Loja'" [style]="{width: '40vw'}"
+  [contentStyle]="{'height': ['windowHeightDialog']}">
+
+  <form #registrarForm="ngForm" name="registrarForm" (ngSubmit)="atualizar(registrarForm)">
+    <div class="p-formgrid p-grid p-d-inline-flex">
+      <p-card>
+        <div class="p-col-4 p-mr-2 p-mb-2">
+          <label>Nome</label>
+          <input required name="nome" [(ngModel)]="lojaEditar.nome" pInputText />
+          <div *ngIf="(registrarForm.controls['nome']
+                && !registrarForm.controls['nome'].valid
+                && (registrarForm.controls['nome'].touched
+                || registrarForm.submitted))" class="p-message p-messages-error">
+            <p-message severity="error" text="Campo obrigatório"></p-message>
+          </div>
+        </div>
+
+        <div class="p-col-4 p-mr-2 p-mb-2">
+          <label>CNPJ</label>
+          <p-inputMask [disabled]="true" required name="cnpj" [(ngModel)]="lojaEditar.cnpj" mask="99.999.999/9999-99"></p-inputMask>
+        </div>
+
+
+        <div class="p-col-4 p-mr-2 p-mb-2">
+          <label>Descrição</label>
+          <textarea required name="descricao" [(ngModel)]="lojaEditar.descricao" pInputTextarea></textarea>
+          <div *ngIf="(registrarForm.controls['descricao']
+                && !registrarForm.controls['descricao'].valid
+                && (registrarForm.controls['descricao'].touched
+                || registrarForm.submitted))" class="p-message p-messages-error">
+            <p-message severity="error" text="Campo obrigatório"></p-message>
+          </div>
+        </div>
+
+        <div class="p-col-4 p-mr-2 p-mb-2">
+          <label>Categoria</label>
+          <p-dropdown required name="categoria" [options]="categorias" [(ngModel)]="lojaEditar.categoria"></p-dropdown>
+          <div *ngIf="(registrarForm.controls['categoria']
+                && !registrarForm.controls['categoria'].valid
+                && (registrarForm.controls['categoria'].touched
+                || registrarForm.submitted))" class="p-message p-messages-error">
+            <p-message severity="error" text="Campo obrigatório"></p-message>
+          </div>
+        </div>
+
+        <div class="p-col-4  p-mr-2 p-mb-2">
+          <label>Telefone</label>
+          <p-inputMask required name="telefone" [(ngModel)]="lojaEditar.telefone" mask="(99) 99999-9999"></p-inputMask>
+          <div *ngIf="(registrarForm.controls['telefone']
+                && !registrarForm.controls['telefone'].valid
+                && (registrarForm.controls['telefone'].touched
+                || registrarForm.submitted))" class="p-message p-messages-error">
+            <p-message severity="error" text="Campo obrigatório"></p-message>
+          </div>
+        </div>
+        <div class="p-col-4 p-mr-2 p-mb-2">
+          <label>UF</label>
+          <p-dropdown required name="uf" [options]="estados" [(ngModel)]="lojaEditar.uf"
+            (onChange)="selectEstado($event.value)" optionLabel="sigla" optionValue="sigla"></p-dropdown>
+
+
+          <div *ngIf="(registrarForm.controls['uf']
+                && !registrarForm.controls['uf'].valid
+                && (registrarForm.controls['uf'].touched
+                || registrarForm.submitted))" class="p-message p-messages-error">
+            <p-message severity="error" text="Campo obrigatório"></p-message>
+          </div>
+        </div>
+
+        <div class="p-col-4 p-mr-2 p-mb-2">
+          <label>Estado</label>
+          <input required id="float-input" name="estado" disabled="true" type="text" [(ngModel)]="lojaEditar.estado"
+            placeholder="Estado" pInputText>
+        </div>
+
+        <div class="p-col-4 p-mr-2 p-mb-2">
+          <label>Cidade</label>
+          <p-dropdown [placeholder]="'Cidade'" required name="cidade" [options]="cidades"[(ngModel)]="lojaEditar.cidade">
+
+          </p-dropdown>
+          <div *ngIf="(registrarForm.controls['cidade']
+            && !registrarForm.controls['cidade'].valid
+            && (registrarForm.controls['cidade'].touched
+            || registrarForm.submitted))" class="p-message p-messages-error">
+            <p-message severity="error" text="Campo obrigatório"></p-message>
+          </div>
+        </div>
+
+
+        <div class="p-col-12 p-mr-2 p-mb-2">
+          <label>Logo</label>
+          <p-fileUpload required name="foto" accept="image/*" (onSelect)="selecionarFoto($event)" [chooseLabel]="'Escolha uma imagem'" [showCancelButton]="false" [showUploadButton]="false">
+            <ng-template pTemplate="files"></ng-template>
+            <ng-template pTemplate="content">
+              <div *ngIf="lojaEditar.foto">
+                <div style="display: flex;">
+                  <div style="padding: 7px 14px">
+                      <img style="width: 50px; height: 35px;" [src]="mudouFoto === true ? safeUrl : 'data:image/png;base64,'+lojaEditar.foto" class="image" />
+                  </div>
+                  <div style="padding: 7px 14px">
+                      <p>Foto da loja {{lojaEditar.nome}}</p>
+                  </div>
+              </div>
+              </div>
+            </ng-template>
+          </p-fileUpload>
+        </div>
+        <button pButton pRipple type="button" label="Cancelar" (click)="fecharModalEditar()"
+            class="p-button-secondary p-mr-4"></button>
+
+        <button pButton pRipple type="submit" label="Cadastrar"
+            class="p-button-secondary"></button>
+      </p-card>
+    </div>
+  </form>
+
+
+
+</p-dialog>

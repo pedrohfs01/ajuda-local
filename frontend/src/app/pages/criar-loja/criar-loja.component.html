@@ -1,0 +1,112 @@
+<div class="container">
+  <div class="row justify-content-center align-items-center" style="height:100vh">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <form #registrarForm="ngForm" name="registrarForm" (ngSubmit)="registrar(registrarForm)">
+            <div class="p-formgrid p-grid p-d-inline-flex">
+              <p-card header="Registrar Loja">
+                <div class="p-col-4 p-mr-2 p-mb-2">
+                  <label>Nome</label>
+                  <input required name="nome" [(ngModel)]="loja.nome" pInputText />
+                  <div *ngIf="(registrarForm.controls['nome']
+                        && !registrarForm.controls['nome'].valid
+                        && (registrarForm.controls['nome'].touched
+                        || registrarForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+                </div>
+
+                <div class="p-col-4 p-mr-2 p-mb-2">
+                  <label>CNPJ</label>
+                  <p-inputMask required name="cnpj" [(ngModel)]="loja.cnpj" mask="99.999.999/9999-99"></p-inputMask>
+                  <div *ngIf="(registrarForm.controls['cnpj']
+                        && !registrarForm.controls['cnpj'].valid
+                        && (registrarForm.controls['cnpj'].touched
+                        || registrarForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+                </div>
+
+
+                <div class="p-col-4 p-mr-2 p-mb-2">
+                  <label>Descrição</label>
+                  <textarea required name="descricao" [(ngModel)]="loja.descricao" pInputTextarea></textarea>
+                  <div *ngIf="(registrarForm.controls['descricao']
+                        && !registrarForm.controls['descricao'].valid
+                        && (registrarForm.controls['descricao'].touched
+                        || registrarForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+                </div>
+
+                <div class="p-col-4 p-mr-2 p-mb-2">
+                  <label>Categoria</label>
+                  <p-dropdown required name="categoria" [options]="categorias" [(ngModel)]="loja.categoria"></p-dropdown>
+                  <div *ngIf="(registrarForm.controls['categoria']
+                        && !registrarForm.controls['categoria'].valid
+                        && (registrarForm.controls['categoria'].touched
+                        || registrarForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+                </div>
+
+                <div class="p-col-4  p-mr-2 p-mb-2">
+                  <label>Telefone</label>
+                  <p-inputMask required name="telefone" [(ngModel)]="loja.telefone" mask="(99) 99999-9999"></p-inputMask>
+                  <div *ngIf="(registrarForm.controls['telefone']
+                        && !registrarForm.controls['telefone'].valid
+                        && (registrarForm.controls['telefone'].touched
+                        || registrarForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+                </div>
+                <div class="p-col-4 p-mr-2 p-mb-2">
+                  <label>UF</label>
+                  <p-dropdown required name="uf" [options]="estados" [(ngModel)]="loja.uf"
+                    (onChange)="selectEstado($event)" optionLabel="sigla" optionValue="sigla"></p-dropdown>
+
+
+                  <div *ngIf="(registrarForm.controls['uf']
+                        && !registrarForm.controls['uf'].valid
+                        && (registrarForm.controls['uf'].touched
+                        || registrarForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+                </div>
+
+                <div class="p-col-4 p-mr-2 p-mb-2">
+                  <label>Estado</label>
+                  <input required id="float-input" name="estado" disabled="true" type="text" [(ngModel)]="loja.estado"
+                    placeholder="Estado" pInputText>
+                </div>
+
+                <div class="p-col-4 p-mr-2 p-mb-2">
+                  <label>Cidade</label>
+                  <p-dropdown [placeholder]="'Cidade'" required name="cidade" [options]="cidades"
+                    [(ngModel)]="loja.cidade"></p-dropdown>
+
+                  <div *ngIf="(registrarForm.controls['cidade']
+                    && !registrarForm.controls['cidade'].valid
+                    && (registrarForm.controls['cidade'].touched
+                    || registrarForm.submitted))" class="p-message p-messages-error">
+                    <p-message severity="error" text="Campo obrigatório"></p-message>
+                  </div>
+                </div>
+
+
+                <div class="p-col-12 p-mr-2 p-mb-2">
+                  <label>Logo</label>
+                  <p-fileUpload required name="foto" accept="image/*" (onSelect)="selecionarFoto($event)" [chooseLabel]="'Escolha uma imagem'" [showCancelButton]="false" [showUploadButton]="false"></p-fileUpload>
+                </div>
+              </p-card>
+
+              <button pButton pRipple type="submit" label="Cadastrar"
+                  class="p-button-primary p-md-12 p-mr-12 p-mb-12"></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
