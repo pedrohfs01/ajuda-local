@@ -63,7 +63,7 @@
       <div class="p-col-12">
         <div class="product-name">{{lojaVisualizar?.nome}}</div>
         <div class="product-description">Descrição: {{lojaVisualizar?.descricao}}</div>
-        <div class="product-description">Criado por: {{lojaVisualizar?.usuario?.nome}}</div>
+        <div class="product-description">Criado por: {{lojaVisualizar?.usuario?.nome}} <span style="color: gray;">({{getPlano(lojaVisualizar?.usuario?.plano)}})</span></div>
         <div class="product-description">Telefone: {{lojaVisualizar?.telefone}}</div>
         <div class="product-description">CNPJ: {{lojaVisualizar?.cnpj}}</div>
       </div>

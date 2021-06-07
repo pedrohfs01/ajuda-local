@@ -1,6 +1,7 @@
 package com.ajudalocal.rest;
 
 import com.ajudalocal.domain.Usuario;
+import com.ajudalocal.domain.enums.Plano;
 import com.ajudalocal.repository.UsuarioRepository;
 import com.ajudalocal.rest.util.CustomParameterizedException;
 import com.ajudalocal.rest.util.HeaderUtil;
@@ -46,7 +47,7 @@ public class UsuarioResource {
         }else if(usuarioRepository.findByEmail(usuario.getEmail()).isPresent()){
             throw new CustomParameterizedException("emailexiste");
         }
-
+        usuario.setPlano(Plano.PLANO_COMUM);
         Usuario result = usuarioRepository.save(usuario);
         return ResponseEntity.created(new URI("/api/usuarios/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -83,7 +84,7 @@ public class UsuarioResource {
 
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<Void> deleteUsuario(@PathVariable Long id) {
-        log.debug("REST request to delete Usuario : {}", id);
+        log.debug("REST      request to delete Usuario : {}", id);
         usuarioRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }

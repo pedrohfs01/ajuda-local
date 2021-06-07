@@ -1,2 +1,52 @@
 <p-tabMenu *ngIf="exibirMenu()" [model]="items" #menu>
 </p-tabMenu>
+
+<p-dialog [modal]="true" [closable]="false" #dialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+  [style]="{width: '25vw'}" [visible]="mostrarDialogUsuario" [header]="'Meu usuário'"
+  [contentStyle]="{'height': ['windowHeightDialog']}">
+
+  <form #registrarForm="ngForm" name="registrarForm">
+    <div class="p-formgrid p-grid p-d-inline-flex">
+      <p-card>
+        <div class="p-field p-col-4 p-md-10">
+          <input [disabled]="true" name="nome" id="float-input" [(ngModel)]="usuario.nome" type="text"
+            placeholder="Nome" pInputText>
+        </div>
+        <div class="p-field p-col-4 p-md-10">
+
+          <input [disabled]="true" name="email" id="float-input" type="text" [(ngModel)]="usuario.email"
+            placeholder="Email" pInputText>
+        </div>
+
+        <div class="p-field p-col-4 p-md-10">
+          <label class="p-mr-2" for="empresario">Empresário? </label>
+          <p-toggleButton [disabled]="true" name="empresario" [(ngModel)]="usuario.empresario" [onIcon]="'pi pi-check'"
+            offIcon="pi pi-times"></p-toggleButton>
+        </div>
+
+        <div *ngIf="usuario.empresario">
+          <div class="p-field">
+            <p-button [label]="'Planos contratuais'" icon="pi pi-wallet" (click)="op.toggle($event)"></p-button>
+          </div>
+
+          <p-overlayPanel [appendTo]="dialog" #op [dismissable]="true" [showCloseIcon]="true" [style]="{width: '450px'}"
+            styleClass="planos-panel">
+            <ng-template pTemplate>
+              <div *ngFor="let plano of planos" class="p-field-checkbox">
+                <p-radioButton (onClick)="selecionarPlano($event)" [inputId]="plano.value" name="plano"
+                  [value]="plano.value" [(ngModel)]="selecionadoPlano"></p-radioButton>
+                <label [for]="plano.value">{{plano.label}} ({{plano.preco | currency:'BRL':true }}) Mensal -
+                  {{plano.permissao}} lojas</label>
+              </div>
+            </ng-template>
+          </p-overlayPanel>
+        </div>
+
+        <button pButton pRipple type="button" label="Fechar" (click)="fecharModalEditar()"
+          class="p-button-secondary p-mr-4"></button>
+      </p-card>
+    </div>
+  </form>
+</p-dialog>
+
+<p-confirmDialog header="Confirmação" icon="pi pi-exclamation-triangle"></p-confirmDialog>

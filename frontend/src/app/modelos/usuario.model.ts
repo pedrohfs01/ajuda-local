@@ -13,4 +13,5 @@ export class Usuario{
   lojas?: Loja[];
   ratings: Rating[];
   empresario: boolean = false;
+  plano: any;
 }

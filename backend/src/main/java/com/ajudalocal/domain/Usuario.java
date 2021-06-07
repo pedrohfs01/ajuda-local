@@ -1,6 +1,7 @@
 package com.ajudalocal.domain;
 
 
+import com.ajudalocal.domain.enums.Plano;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -46,6 +47,9 @@ public class Usuario implements Serializable {
     private Set<LojaRating> ratings;
 
     private Boolean isEmpresario;
+
+    private Plano plano;
+
 
     public Long getId() {
         return id;
@@ -172,6 +176,14 @@ public class Usuario implements Serializable {
 
     public void setEmpresario(Boolean empresario) {
         isEmpresario = empresario;
+    }
+
+    public Plano getPlano() {
+        return plano;
+    }
+
+    public void setPlano(Plano plano) {
+        this.plano = plano;
     }
 
     @Override

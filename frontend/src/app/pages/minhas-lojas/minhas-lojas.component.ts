@@ -48,8 +48,19 @@ export class MinhasLojasComponent implements OnInit {
 
     this.categorias = [
       "Geral",
+      "Papelarias",
       "Restaurante",
-      "Comércio local"
+      "Hamburgaria",
+      "Fast-food",
+      "Mercado",
+      "Auto-peças",
+      "Salão de beleza",
+      "Informática",
+      "Padaria",
+      "Pizzaria",
+      "Loja de bebidas",
+      "Shopping",
+      "Academia"
     ]
 
     this.utilitarioService.listarEstados().subscribe(response => {

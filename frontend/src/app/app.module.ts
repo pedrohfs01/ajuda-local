@@ -43,6 +43,10 @@ import {ToggleButtonModule} from 'primeng/togglebutton'
 import { ToastrModule } from 'ngx-toastr';
 import { MinhasLojasComponent } from './pages/minhas-lojas/minhas-lojas.component';
 import { DialogModule } from "primeng/dialog";
+import { OverlayPanelModule } from "primeng/overlaypanel";
+import { RadioButtonModule } from "primeng/radiobutton";
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 
 
 
@@ -55,7 +59,7 @@ import { DialogModule } from "primeng/dialog";
     LojasComponent,
     MenuComponent,
     CriarLojaComponent,
-    MinhasLojasComponent,
+    MinhasLojasComponent
   ],
   imports: [
     BrowserModule,
@@ -90,9 +94,12 @@ import { DialogModule } from "primeng/dialog";
     RatingModule,
     DialogModule,
     ToggleButtonModule,
+    OverlayPanelModule,
+    RadioButtonModule,
+    ConfirmDialogModule,
     ToastrModule.forRoot(),
   ],
-  providers: [LojaService, UsuarioService, UtilitarioService, MessageService, StorageService],
+  providers: [LojaService, UsuarioService, UtilitarioService, MessageService, StorageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

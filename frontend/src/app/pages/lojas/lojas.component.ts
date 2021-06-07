@@ -54,23 +54,39 @@ export class LojasComponent implements OnInit {
 
     this.categorias = [
       "Geral",
+      "Papelarias",
       "Restaurante",
-      "Comércio local"
+      "Hamburgaria",
+      "Fast-food",
+      "Mercado",
+      "Auto-peças",
+      "Salão de beleza",
+      "Informática",
+      "Padaria",
+      "Pizzaria",
+      "Loja de bebidas",
+      "Shopping",
+      "Academia"
     ]
   }
 
   carregarLojas() {
     this.lojaService.getAll().subscribe(response => {
-      let ratingTotal = 0;
       this.lojas = response;
-      this.lojas.forEach(item => {
-        item.ratings.forEach(rating => {
-          ratingTotal += rating.rating;
-        })
-        item.ratingTotal = ratingTotal / item.ratings.length;
-        ratingTotal = 0;
-      })
+      this.carregarRatingLojas();
     })
+  }
+
+  carregarRatingLojas() {
+    let ratingTotal = 0;
+    this.lojas.forEach(item => {
+      item.ratings.forEach(rating => {
+        ratingTotal += rating.rating;
+      })
+      item.ratingTotal = ratingTotal / item.ratings.length;
+      ratingTotal = 0;
+    })
+    this.lojas.sort((a, b) => b.ratingTotal - a.ratingTotal);
   }
 
 
@@ -99,23 +115,27 @@ export class LojasComponent implements OnInit {
       if (this.cidadeSearch === null) {
         this.lojaService.getAllByEstado(this.estadoSearch.nome).subscribe(response => {
           this.lojas = response;
+          this.carregarRatingLojas();
           this.limpaCampos();
         })
       } else {
         this.lojaService.getAllByCidade(this.cidadeSearch).subscribe(response => {
           this.lojas = response;
+          this.carregarRatingLojas();
           this.limpaCampos();
         })
       }
-    }else{
+    } else {
       if (this.cidadeSearch === null) {
         this.lojaService.getAllByCategoria(this.categoriaSearch, this.estadoSearch.nome, null).subscribe(response => {
           this.lojas = response;
+          this.carregarRatingLojas();
           this.limpaCampos();
         })
       } else {
         this.lojaService.getAllByCategoria(this.categoriaSearch, this.estadoSearch.nome, this.cidadeSearch).subscribe(response => {
           this.lojas = response;
+          this.carregarRatingLojas();
           this.limpaCampos();
         })
       }
@@ -169,6 +189,21 @@ export class LojasComponent implements OnInit {
 
   doRating(valor: number) {
     this.valorRating = valor;
+  }
+
+  getPlano(plano: any) {
+    switch (plano) {
+      case "PLANO_BRONZE":
+        return "Plano Bronze";
+      case "PLANO_PRATA":
+        return "Plano Prata";
+      case "PLANO_OURO":
+        return "Plano Ouro";
+      case "PLANO_DIAMANTE":
+        return "Plano Diamante";
+      default:
+        return "Plano Comum";
+    }
   }
 
 }
